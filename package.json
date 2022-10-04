@@ -1,7 +1,7 @@
 {
   "name": "com.zvasya.vector_image_utils",
   "displayName": "Vector Image Utils",
-  "version": "0.1",
+  "version": "0.1.0",
   "unity": "2021.3",
   "description": "Utils methods to internal fields and editor window for Vector Image",
   "author": {
