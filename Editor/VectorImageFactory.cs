@@ -38,7 +38,7 @@ namespace VectorImageUtils.Editor
             return Selection.activeObject is VectorImage;
         }
 
-        [MenuItem("Assets/Create/ExtractVectorImage")]
+        [MenuItem("Assets/Create/VectorImage/Extract")]
         public static void ExtractVectorImage()
         {
             string path = null;
@@ -47,7 +47,7 @@ namespace VectorImageUtils.Editor
                 path = AssetDatabase.GetAssetPath(Selection.activeObject.GetInstanceID());
                 if (!string.IsNullOrEmpty(path))
                 {
-                    var name = Path.GetFileName(path);
+                    var name = Path.GetFileNameWithoutExtension(path);
                     path = Path.GetDirectoryName(path) ?? "Assets";
 
                     VectorImage image = ScriptableObject.CreateInstance<VectorImage>();
@@ -59,6 +59,32 @@ namespace VectorImageUtils.Editor
                     AssetDatabase.SaveAssets();
                     EditorUtility.FocusProjectWindow();
                     Selection.activeObject = image;
+                }
+            }
+        }
+        
+        [MenuItem("Assets/Create/VectorImage/Create Mesh", true)]
+        public static bool MeshFromVectorImageValidate()
+        {
+            return Selection.activeObject is VectorImage;
+        }
+        
+        [MenuItem("Assets/Create/VectorImage/Create Mesh")]
+        public static void MeshFromVectorImageVectorImage()
+        {
+            string path = null;
+            if (Selection.activeObject != null && Selection.activeObject is VectorImage vi)
+            {
+                path = AssetDatabase.GetAssetPath(Selection.activeObject.GetInstanceID());
+                if (!string.IsNullOrEmpty(path))
+                {
+                    var name = Path.GetFileNameWithoutExtension(path);
+                    path = Path.GetDirectoryName(path) ?? "Assets";
+
+                    var mesh = vi.CreateMesh();
+                    AssetDatabase.CreateAsset(mesh, Path.Combine(path, $"{name}_mesh.asset"));
+                    AssetDatabase.SaveAssets();
+                    EditorUtility.FocusProjectWindow();
                 }
             }
         }

@@ -167,5 +167,40 @@ namespace VectorImageUtils.Editor
         {
             SetViAtlas(img, atlas);
         }
+        
+        public static Mesh CreateMesh(this VectorImage img)
+        {
+            var m = new Mesh();
+            var vertices = img.GetVertices();
+            var verticesLength = vertices.Length;
+            var meshVertices = new Vector3[verticesLength];
+            var meshUV = new Vector2[verticesLength];
+            var meshColors = new Color[verticesLength];
+
+            for (var i = 0; i < verticesLength; i++)
+            {
+                var vertex = vertices[i];
+                meshVertices[i] = vertex.position;
+                meshUV[i] = vertex.uv;
+                meshColors[i] = vertex.tint;
+            }
+
+
+            var indexes = img.GetIndexes();
+            var indexesLength = indexes.Length;
+            var meshTriangles = new int[indexesLength];
+            for (var i = 0; i < indexesLength; i++)
+            {
+                meshTriangles[i] = indexes[i];
+            }
+
+            m.vertices = meshVertices;
+            m.uv = meshUV;
+            m.colors = meshColors;
+            m.triangles = meshTriangles;
+
+            m.RecalculateBounds();
+            return m;
+        }
     }
 }

@@ -15,14 +15,14 @@ namespace VectorImageUtils.Editor
             _target = target;
             _previewUtility = new();
             SetupScene();
-            var mesh = CreateMesh();
+            var mesh = _target.CreateMesh();
 
             var size = target.GetSize();
             var go = new GameObject();
             var meshFilter = go.AddComponent<MeshFilter>();
             var meshRenderer = go.AddComponent<MeshRenderer>();
             meshFilter.mesh = mesh;
-            meshRenderer.material = new Material(Shader.Find("Unlit/VectorUI"));
+            meshRenderer.material = new Material(Shader.Find("UI/Default"));
 
             _previewUtility.AddSingleGO(go);
             go.transform.position = new Vector3(-size.x / 2, size.y / 2, 0);
@@ -39,42 +39,6 @@ namespace VectorImageUtils.Editor
             }
 
             _previewUtility.ambientColor = Color.white;
-        }
-
-
-        private Mesh CreateMesh()
-        {
-            var m = new Mesh();
-            var vertices = _target.GetVertices();
-            var verticesLength = vertices.Length;
-            var meshVertices = new Vector3[verticesLength];
-            var meshUV = new Vector2[verticesLength];
-            var meshColors = new Color[verticesLength];
-
-            for (var i = 0; i < verticesLength; i++)
-            {
-                var vertex = vertices[i];
-                meshVertices[i] = vertex.position;
-                meshUV[i] = vertex.uv;
-                meshColors[i] = vertex.tint;
-            }
-
-
-            var indexes = _target.GetIndexes();
-            var indexesLength = indexes.Length;
-            var meshTriangles = new int[indexesLength];
-            for (var i = 0; i < indexesLength; i++)
-            {
-                meshTriangles[i] = indexes[i];
-            }
-
-            m.vertices = meshVertices;
-            m.uv = meshUV;
-            m.colors = meshColors;
-            m.triangles = meshTriangles;
-
-            m.RecalculateBounds();
-            return m;
         }
 
         public void Dispose()
