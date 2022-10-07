@@ -1,17 +1,17 @@
-#Vector Image Utils
+# Vector Image Utils
 
 ![LocalizedDataBinding](.instructions/header.png)
 
-###Main features
+### Main features
 1) Create VectorImage from editor and manipulate from code.
 2) Preview for VectorImage in Inspector and Project tabs.
 3) Create Mesh from VectorImage for using in scene.
 
-###Create
+### Create
 All menu is accessible from create menu:
 ![LocalizedDataBinding](.instructions/creating.png)
 
-###Get and Set values from code
+### Get and Set values from code
 
 ```c#
 VectorImage Copy(VectorImage vi)
@@ -24,5 +24,5 @@ VectorImage Copy(VectorImage vi)
     return image;
 }
 ```
-###Preview
+### Preview
 ![LocalizedDataBinding](.instructions/inspector.png)
